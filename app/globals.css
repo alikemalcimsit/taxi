@@ -45,13 +45,7 @@ html,body{background:var(--bg-dark);color:var(--ink);}
     from { opacity: 0; }
     to   { opacity: 1; }
   }
-}
-@media (prefers-reduced-motion: no-preference) {
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(10-18px); }
-    to   { opacity: 1; transform: translateY(0); }
-  }
-  @keyframes fadeIn {
+    @keyframes fadeIn {
     from { opacity: 0; } to { opacity: 1; }
   }
   @keyframes floatY {
