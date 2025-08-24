@@ -1,14 +1,31 @@
 // config/site.ts
-export const site = {
+
+export type SiteConfig = {
+  name: string;
+  phone: string;
+  email?: string;
+  address?: string;
+  addressTitle?: string;
+  url?: string;            // <- eklendi
+  social?: {
+    whatsapp?: string;
+    instagram?: string;
+    twitter?: string;
+    facebook?: string;
+  };
+};
+export const SITE_URL =
+  process.env.NEXT_PUBLIC_SITE_URL || "https://example.com";
+
+export const site: SiteConfig = {
   name: "Saraybosna Taksi",
   phone: "+90 506 023 77 36",
-  email: "info@ornek.com",
   address: "Erzurum",
-  addressTitle: "Adres",
+  addressTitle: "Adres:",
+  url: SITE_URL,           // <- eklendi
   social: {
     whatsapp: "https://wa.me/905060237736",
   },
 };
 
-// tel: linki için
-export const telHref = site.phone.replace(/\s+/g, "").replace(/^0/, "+90");
+export const telHref = `tel:${site.phone.replace(/\D/g, "")}`;
