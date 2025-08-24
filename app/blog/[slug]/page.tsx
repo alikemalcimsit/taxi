@@ -1,12 +1,20 @@
 // app/blog/[slug]/page.tsx
 import type { Metadata } from "next";
+import Script from "next/script";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import PageHeader from "@/components/layout/PageHeader";
-import { blogPosts } from "../../../data/blog";
+import { blogPosts } from "@/data/blog";
+
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://example.com";
 
 type Params = Promise<{ slug: string }>;
+
+function abs(path?: string) {
+  if (!path) return undefined;
+  try { return new URL(path, SITE_URL).toString(); } catch { return path; }
+}
 
 function formatDate(iso: string) {
   try {
@@ -31,25 +39,36 @@ export async function generateMetadata(
     return {
       title: "Blog | Saraybosna Taksi",
       description: "Erzurum Saraybosna Taksi blog yazıları.",
+      alternates: { canonical: "/blog" },
     };
   }
+
+  const url = `${SITE_URL}/blog/${post.slug}`;
+  const image = post.image ? abs(post.image) : `${SITE_URL}/og/og-cover.jpg`;
 
   return {
     title: `${post.title} | Saraybosna Taksi`,
     description: post.excerpt,
+    alternates: { canonical: `/blog/${post.slug}` },
     openGraph: {
+      type: "article",
+      url,
       title: `${post.title} | Saraybosna Taksi`,
       description: post.excerpt,
-      type: "article",
-      url: `https://example.com/blog/${post.slug}`, // domainini burada güncelle
-      images: post.image ? [post.image] : undefined,
+      siteName: "Saraybosna Taksi",
+      locale: "tr_TR",
+      images: [{ url: image, width: 1200, height: 630, alt: post.title }],
+      authors: post.author ? [post.author] : undefined,
+      publishedTime: post.date,
+      modifiedTime: post.updatedAt ?? post.date,
     },
     twitter: {
       card: "summary_large_image",
       title: `${post.title} | Saraybosna Taksi`,
       description: post.excerpt,
-      images: post.image ? [post.image] : undefined,
+      images: [image],
     },
+    keywords: ["Erzurum taksi", "taksi blog", "transfer", "Saraybosna Taksi"],
   };
 }
 
@@ -64,6 +83,31 @@ export default async function BlogPostPage(
 
   const prev = blogPosts[index - 1];
   const next = blogPosts[index + 1];
+
+  // JSON-LD: Article + Breadcrumbs
+  const articleLd = {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    headline: post.title,
+    description: post.excerpt,
+    image: post.image ? abs(post.image) : undefined,
+    datePublished: post.date,
+    dateModified: post.updatedAt ?? post.date,
+    url: `${SITE_URL}/blog/${post.slug}`,
+    mainEntityOfPage: `${SITE_URL}/blog/${post.slug}`,
+    author: post.author ? { "@type": "Person", name: post.author } : { "@type": "Organization", name: "Saraybosna Taksi" },
+    publisher: { "@type": "Organization", name: "Saraybosna Taksi", logo: { "@type": "ImageObject", url: `${SITE_URL}/icons/apple-touch-icon.png` } },
+  };
+
+  const breadcrumbsLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Anasayfa", item: SITE_URL },
+      { "@type": "ListItem", position: 2, name: "Blog", item: `${SITE_URL}/blog` },
+      { "@type": "ListItem", position: 3, name: post.title, item: `${SITE_URL}/blog/${post.slug}` },
+    ],
+  };
 
   return (
     <>
@@ -121,15 +165,15 @@ export default async function BlogPostPage(
             {/* Paylaşım butonları */}
             <div className="flex items-center gap-3 mb-6">
               <ShareButton
-                href={`https://twitter.com/intent/tweet?url=${encodeURIComponent(`https://example.com/blog/${post.slug}`)}&text=${encodeURIComponent(post.title)}`}
+                href={`https://twitter.com/intent/tweet?url=${encodeURIComponent(`${SITE_URL}/blog/${post.slug}`)}&text=${encodeURIComponent(post.title)}`}
                 label="Twitter"
               />
               <ShareButton
-                href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(`https://example.com/blog/${post.slug}`)}`}
+                href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(`${SITE_URL}/blog/${post.slug}`)}`}
                 label="Facebook"
               />
               <ShareButton
-                href={`https://wa.me/?text=${encodeURIComponent(`${post.title} - https://example.com/blog/${post.slug}`)}`}
+                href={`https://wa.me/?text=${encodeURIComponent(`${post.title} - ${SITE_URL}/blog/${post.slug}`)}`}
                 label="WhatsApp"
               />
             </div>
@@ -168,6 +212,12 @@ export default async function BlogPostPage(
           </div>
         </div>
       </section>
+
+      {/* JSON-LD */}
+      <Script id="ld-json-article" type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(articleLd) }} />
+      <Script id="ld-json-breadcrumbs" type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbsLd) }} />
     </>
   );
 }
@@ -199,9 +249,7 @@ function NavCard({
   return (
     <Link
       href={href}
-      className={`group rounded-lg border border-black/10 bg-white p-4 shadow-[0_8px_24px_rgba(0,0,0,.06)] hover:-translate-y-0.5 hover:shadow-[0_16px_36px_rgba(0,0,0,.08)] transition ${
-        direction === "next" ? "md:text-right" : ""
-      }`}
+      className={`group rounded-lg border border-black/10 bg-white p-4 shadow-[0_8px_24px_rgba(0,0,0,.06)] hover:-translate-y-0.5 hover:shadow-[0_16px_36px_rgba(0,0,0,.08)] transition ${direction === "next" ? "md:text-right" : ""}`}
     >
       <div className="text-[11px] tracking-wide text-black/60 mb-1">
         {direction === "prev" ? "← Önceki Yazı" : "Sonraki Yazı →"}

@@ -1,69 +1,99 @@
-// features/blog/BlogListPage.tsx
-import Link from "next/link";
-import Image from "next/image";
-import PageHeader from "@/components/layout/PageHeader";
-import { blogPosts } from "../../data/blog";
+// app/blog/page.tsx
+import type { Metadata } from "next";
+import Script from "next/script";
+import BlogListClient from "./BlogListClient";
+import { blogPosts } from "@/data/blog";
 
-export default function BlogListPage() {
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://example.com";
+const BRAND = "Saraybosna Taksi";
+
+export const metadata: Metadata = {
+  title: "Erzurum Taksi Blog | Saraybosna Taksi",
+  description:
+    "Erzurum’da taksi ve transfer hakkında ipuçları, güzergâhlar, fiyatlar ve faydalı bilgiler.",
+  alternates: { canonical: "/blog" },
+  openGraph: {
+    type: "website",
+    url: `${SITE_URL}/blog`,
+    siteName: BRAND,
+    title: "Erzurum Taksi Blog | Saraybosna Taksi",
+    description:
+      "Taksi ve transfer rehberleri, ipuçları ve güncel içerikler.",
+    images: [{ url: "/og/og-cover.jpg", width: 1200, height: 630, alt: BRAND }],
+    locale: "tr_TR",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Erzurum Taksi Blog | Saraybosna Taksi",
+    description:
+      "Taksi ve transfer rehberleri, ipuçları ve güncel içerikler.",
+    images: ["/og/og-cover.jpg"],
+  },
+  keywords: [
+    "Erzurum taksi blog",
+    "Erzurum transfer rehberi",
+    "taksi fiyatları Erzurum",
+    "Saraybosna Taksi blog",
+  ],
+};
+
+export default function BlogPage() {
+  // JSON-LD: Blog + ItemList + Breadcrumbs
+  const jsonLdBlog = {
+    "@context": "https://schema.org",
+    "@type": "Blog",
+    name: "Erzurum Taksi Blog",
+    url: `${SITE_URL}/blog`,
+    blogPost: blogPosts.map((p: any) => ({
+      "@type": "BlogPosting",
+      headline: p.title,
+      description: p.excerpt,
+      image: p.image ? new URL(p.image, SITE_URL).toString() : undefined,
+      datePublished: p.date,           // mümkünse ISO format ver
+      dateModified: p.updatedAt ?? p.date,
+      url: `${SITE_URL}/blog/${p.slug}`,
+      author: p.author
+        ? { "@type": "Person", name: p.author }
+        : { "@type": "Organization", name: BRAND },
+    })),
+  };
+
+  const jsonLdList = {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    itemListElement: blogPosts.map((p: any, i: number) => ({
+      "@type": "ListItem",
+      position: i + 1,
+      url: `${SITE_URL}/blog/${p.slug}`,
+      item: {
+        "@type": "BlogPosting",
+        name: p.title,
+        description: p.excerpt,
+        url: `${SITE_URL}/blog/${p.slug}`,
+      },
+    })),
+  };
+
+  const jsonLdBreadcrumbs = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Anasayfa", item: SITE_URL },
+      { "@type": "ListItem", position: 2, name: "Blog", item: `${SITE_URL}/blog` },
+    ],
+  };
+
   return (
     <>
-      <PageHeader
-        title="ERZURUM TAKSİ BLOG"
-        breadcrumb={
-          <>
-            Anasayfa <span className="text-[#FFC000]">// Blog</span>
-          </>
-        }
-      />
+      <BlogListClient />
 
-      <section className="py-16 bg-[#F2F3F5]">
-        <div className="max-w-[1184px] mx-auto px-5">
-          <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-            {blogPosts.map((post) => (
-              <article
-                key={post.slug}
-                className="rounded-xl bg-white border border-black/5 shadow-[0_8px_30px_rgba(0,0,0,.08)] overflow-hidden flex flex-col"
-              >
-                {/* Kapak görseli */}
-                <div className="relative h-48 w-full">
-                  <Image
-                    src={post.image || "/images/blog/placeholder.jpg"}
-                    alt={post.title}
-                    fill
-                    className="object-cover"
-                    sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
-                    priority={false}
-                  />
-                </div>
-
-                {/* İçerik */}
-                <div className="p-5 flex-1 flex flex-col">
-                  {/* tarih */}
-                  <div className="flex items-center text-xs text-black/60 mb-3">
-                    <span className="mr-1">🕓</span> {post.date}
-                  </div>
-
-                  {/* başlık */}
-                  <h2 className="font-extrabold text-[16px] leading-snug mb-2">
-                    {post.title}
-                  </h2>
-
-                  {/* özet */}
-                  <p className="text-sm text-black/70 flex-1">{post.excerpt}</p>
-
-                  {/* buton */}
-                  <Link
-                    href={`/blog/${post.slug}`}
-                    className="mt-4 inline-block rounded-md bg-[#FFC000] text-black font-extrabold px-4 py-2 text-sm text-center hover:bg-[#e6ae00] transition"
-                  >
-                    daha fazla
-                  </Link>
-                </div>
-              </article>
-            ))}
-          </div>
-        </div>
-      </section>
+      {/* JSON-LD */}
+      <Script id="ld-blog" type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdBlog) }} />
+      <Script id="ld-itemlist" type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdList) }} />
+      <Script id="ld-breadcrumbs" type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdBreadcrumbs) }} />
     </>
   );
 }
