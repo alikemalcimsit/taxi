@@ -8,12 +8,17 @@ import PageHeader from "@/components/layout/PageHeader";
 import { blogPosts } from "@/data/blog";
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://example.com";
+const FALLBACK_OG = `${SITE_URL}/og/og-cover.jpg`;
 
 type Params = Promise<{ slug: string }>;
 
-function abs(path?: string) {
-  if (!path) return undefined;
-  try { return new URL(path, SITE_URL).toString(); } catch { return path; }
+function abs(path?: string): string {
+  if (!path) return SITE_URL;
+  try {
+    return new URL(path, SITE_URL).toString();
+  } catch {
+    return path || SITE_URL;
+  }
 }
 
 function formatDate(iso: string) {
@@ -28,7 +33,7 @@ function formatDate(iso: string) {
   }
 }
 
-// ✅ SEO (Next 15: params -> Promise, await gerekiyor)
+// SEO
 export async function generateMetadata(
   { params }: { params: Params }
 ): Promise<Metadata> {
@@ -39,34 +44,34 @@ export async function generateMetadata(
     return {
       title: "Blog | Saraybosna Taksi",
       description: "Erzurum Saraybosna Taksi blog yazıları.",
-      alternates: { canonical: "/blog" },
+      alternates: { canonical: `${SITE_URL}/blog` },
     };
   }
 
-  const url = `${SITE_URL}/blog/${post.slug}`;
-  const image = post.image ? abs(post.image) : `${SITE_URL}/og/og-cover.jpg`;
+  const canonical = `${SITE_URL}/blog/${post.slug}`;
+  const imgUrl: string = post.image ? abs(post.image) : FALLBACK_OG;
 
   return {
     title: `${post.title} | Saraybosna Taksi`,
     description: post.excerpt,
-    alternates: { canonical: `/blog/${post.slug}` },
+    alternates: { canonical },
     openGraph: {
       type: "article",
-      url,
-      title: `${post.title} | Saraybosna Taksi`,
-      description: post.excerpt,
+      url: canonical,
       siteName: "Saraybosna Taksi",
       locale: "tr_TR",
-      images: [{ url: image, width: 1200, height: 630, alt: post.title }],
+      title: `${post.title} | Saraybosna Taksi`,
+      description: post.excerpt,
+      images: [{ url: imgUrl, width: 1200, height: 630, alt: post.title }],
       authors: post.author ? [post.author] : undefined,
       publishedTime: post.date,
-      modifiedTime: post.updatedAt ?? post.date,
+      modifiedTime: post.date,
     },
     twitter: {
       card: "summary_large_image",
       title: `${post.title} | Saraybosna Taksi`,
       description: post.excerpt,
-      images: [image],
+      images: [imgUrl],
     },
     keywords: ["Erzurum taksi", "taksi blog", "transfer", "Saraybosna Taksi"],
   };
@@ -76,7 +81,6 @@ export default async function BlogPostPage(
   { params }: { params: Params }
 ) {
   const { slug } = await params;
-
   const index = blogPosts.findIndex((p) => p.slug === slug);
   const post = index >= 0 ? blogPosts[index] : undefined;
   if (!post) return notFound();
@@ -90,13 +94,22 @@ export default async function BlogPostPage(
     "@type": "BlogPosting",
     headline: post.title,
     description: post.excerpt,
-    image: post.image ? abs(post.image) : undefined,
+    image: post.image ? abs(post.image) : FALLBACK_OG, // <- image (tekil) ve string
     datePublished: post.date,
-    dateModified: post.updatedAt ?? post.date,
+    dateModified: post.date,
     url: `${SITE_URL}/blog/${post.slug}`,
     mainEntityOfPage: `${SITE_URL}/blog/${post.slug}`,
-    author: post.author ? { "@type": "Person", name: post.author } : { "@type": "Organization", name: "Saraybosna Taksi" },
-    publisher: { "@type": "Organization", name: "Saraybosna Taksi", logo: { "@type": "ImageObject", url: `${SITE_URL}/icons/apple-touch-icon.png` } },
+    author: post.author
+      ? { "@type": "Person", name: post.author }
+      : { "@type": "Organization", name: "Saraybosna Taksi" },
+    publisher: {
+      "@type": "Organization",
+      name: "Saraybosna Taksi",
+      logo: {
+        "@type": "ImageObject",
+        url: `${SITE_URL}/icons/apple-touch-icon.png`,
+      },
+    },
   };
 
   const breadcrumbsLd = {
@@ -111,7 +124,6 @@ export default async function BlogPostPage(
 
   return (
     <>
-      {/* Üst başlık */}
       <PageHeader
         title={post.title}
         breadcrumb={
@@ -123,7 +135,6 @@ export default async function BlogPostPage(
         }
       />
 
-      {/* Kapak görseli (varsa) */}
       {post.image && (
         <div className="bg-[#0f1114]">
           <div className="max-w-[1184px] mx-auto px-5">
@@ -141,11 +152,9 @@ export default async function BlogPostPage(
         </div>
       )}
 
-      {/* İçerik */}
       <section className="py-12 md:py-16 bg-[#F2F3F5] text-black">
         <div className="mx-auto px-5 md:px-8 xl:px-16">
           <div className="max-w-[960px] mx-auto flex justify-center flex-col">
-            {/* Meta satırı */}
             <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-[13px] text-black/60 mb-6">
               <span className="inline-flex items-center gap-1">
                 <span>📅</span> {formatDate(post.date)}
@@ -162,7 +171,6 @@ export default async function BlogPostPage(
               )}
             </div>
 
-            {/* Paylaşım butonları */}
             <div className="flex items-center gap-3 mb-6">
               <ShareButton
                 href={`https://twitter.com/intent/tweet?url=${encodeURIComponent(`${SITE_URL}/blog/${post.slug}`)}&text=${encodeURIComponent(post.title)}`}
@@ -178,29 +186,25 @@ export default async function BlogPostPage(
               />
             </div>
 
-            {/* Makale */}
             <article className="prose max-w-none prose-p:leading-relaxed prose-headings:font-extrabold prose-h2:text-[22px] prose-h3:text-[18px] prose-a:text-[#111316] prose-a:underline text-justify">
               {post.content}
             </article>
 
-            {/* Ayraç */}
             <div className="my-10 h-px bg-black/10" />
 
-            {/* Önceki / Sonraki */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {prev ? (
-                <NavCard title={prev.title} href={`/blog/${prev.slug}`} direction="prev" />
+              {blogPosts[index - 1] ? (
+                <NavCard title={blogPosts[index - 1].title} href={`/blog/${blogPosts[index - 1].slug}`} direction="prev" />
               ) : (
                 <div className="opacity-50 text-sm">Önceki yazı yok</div>
               )}
-              {next ? (
-                <NavCard title={next.title} href={`/blog/${next.slug}`} direction="next" />
+              {blogPosts[index + 1] ? (
+                <NavCard title={blogPosts[index + 1].title} href={`/blog/${blogPosts[index + 1].slug}`} direction="next" />
               ) : (
                 <div className="opacity-50 text-sm md:text-right">Sonraki yazı yok</div>
               )}
             </div>
 
-            {/* Geri linki */}
             <div className="mt-8">
               <Link
                 href="/blog"
@@ -213,7 +217,6 @@ export default async function BlogPostPage(
         </div>
       </section>
 
-      {/* JSON-LD */}
       <Script id="ld-json-article" type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(articleLd) }} />
       <Script id="ld-json-breadcrumbs" type="application/ld+json"
