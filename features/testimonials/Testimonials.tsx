@@ -33,33 +33,15 @@ export default function Testimonials() {
   };
 
   return (
-    <section
-      id="yorumlar"
-      className="bg-[#0e1014] text-white py-12 md:py-16 border-y border-white/10"
-      aria-labelledby="testimonials-title"
-    >
-      <Script
-        id="ld-json-testimonials"
-        type="application/ld+json"
-        strategy="afterInteractive"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-      />
+    <section id="yorumlar" className="bg-[#0e1014] text-white py-12 md:py-16 border-y border-white/10" aria-labelledby="testimonials-title">
+      <Script id="ld-json-testimonials" type="application/ld+json" strategy="afterInteractive" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
 
       <Container>
         {/* başlıklar */}
         <div className="motion-safe:opacity-0 motion-safe:animate-[fadeUp_.35s_ease-out_forwards]">
-          <div className="text-xs font-extrabold text-[#FFC000] uppercase tracking-wider">
-            Mutlu Müşteri
-          </div>
-          <h2
-            id="testimonials-title"
-            className="text-2xl md:text-3xl font-extrabold mt-2 mb-2"
-          >
-            Müşteri Yorumları
-          </h2>
-          <p className="text-sm text-white/70 mb-6">
-            Gerçek yolcu deneyimleri. Ortalama {avg}/5 ⭐
-          </p>
+          <div className="text-xs font-extrabold text-[#FFC000] uppercase tracking-wider">Mutlu Müşteri</div>
+          <h2 id="testimonials-title" className="text-2xl md:text-3xl font-extrabold mt-2 mb-2">Müşteri Yorumları</h2>
+          <p className="text-sm text-white/70 mb-6">Gerçek yolcu deneyimleri. Ortalama {avg}/5 ⭐</p>
         </div>
 
         {/* kartlar */}
@@ -67,10 +49,7 @@ export default function Testimonials() {
           {testimonials.map((t, i) => (
             <article
               key={t.id}
-              className="rounded-2xl border border-white/10 bg-white/5 backdrop-blur p-5
-                         hover:-translate-y-0.5 hover:shadow-[0_14px_36px_rgba(0,0,0,.25)]
-                         transition will-change-transform
-                         motion-safe:opacity-0 motion-safe:animate-[fadeUp_.35s_ease-out_forwards]"
+              className="rounded-2xl border border-white/10 bg-white/5 backdrop-blur p-5 hover:-translate-y-0.5 hover:shadow-[0_14px_36px_rgba(0,0,0,.25)] transition will-change-transform motion-safe:opacity-0 motion-safe:animate-[fadeUp_.35s_ease-out_forwards]"
               style={{ animationDelay: `calc(${i} * 80ms)` }}
               itemScope
               itemType="https://schema.org/Review"
@@ -82,17 +61,10 @@ export default function Testimonials() {
               </div>
 
               {/* Metin */}
-              <p className="text-sm text-white/90" itemProp="reviewBody">
-                {t.text}
-              </p>
+              <p className="text-sm text-white/90" itemProp="reviewBody">{t.text}</p>
 
               {/* İmza */}
-              <div
-                className="mt-4 text-sm text-white/80 font-semibold"
-                itemProp="author"
-                itemScope
-                itemType="https://schema.org/Person"
-              >
+              <div className="mt-4 text-sm text-white/80 font-semibold" itemProp="author" itemScope itemType="https://schema.org/Person">
                 <span itemProp="name">{t.name}</span>
               </div>
               <div className="text-xs text-white/60">{t.area}</div>
@@ -108,16 +80,6 @@ export default function Testimonials() {
           ))}
         </div>
       </Container>
-
-      {/* keyframes – globalde varsa kaldırabilirsin */}
-      <style jsx>{`
-        @media (prefers-reduced-motion: no-preference) {
-          @keyframes fadeUp {
-            from { opacity: 0; transform: translateY(18px); }
-            to   { opacity: 1; transform: translateY(0); }
-          }
-        }
-      `}</style>
     </section>
   );
 }

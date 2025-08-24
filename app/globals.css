@@ -52,3 +52,18 @@ html,body{background:var(--bg-dark);color:var(--ink);}
     0% { transform: translateY(0) } 50% { transform: translateY(-6px) } 100% { transform: translateY(0) }
   }
 }
+@media (prefers-reduced-motion: no-preference) {
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(18px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+  }
+  @keyframes floatY {
+    0%   { transform: translateY(0); }
+    50%  { transform: translateY(-6px); }
+    100% { transform: translateY(0); }
+  }
+}
