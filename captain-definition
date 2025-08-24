@@ -1,6 +1,4 @@
-cat > captain-definition <<'JSON'
 {
   "schemaVersion": 2,
   "dockerfilePath": "./Dockerfile"
 }
-JSON
