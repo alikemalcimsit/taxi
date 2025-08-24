@@ -36,3 +36,25 @@ body {
 html,body{background:var(--bg-dark);color:var(--ink);}
 .checker{height:10px;background:repeating-linear-gradient(90deg,var(--brand) 0 18px,#0b0c0e 18px 36px);}
 .container{max-width:1184px;margin:0 auto;padding:0 20px;}
+@media (prefers-reduced-motion: no-preference) {
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(10px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+  }
+}
+@media (prefers-reduced-motion: no-preference) {
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(10-18px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; } to { opacity: 1; }
+  }
+  @keyframes floatY {
+    0% { transform: translateY(0) } 50% { transform: translateY(-6px) } 100% { transform: translateY(0) }
+  }
+}

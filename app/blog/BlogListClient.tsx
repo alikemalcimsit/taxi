@@ -3,59 +3,39 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { motion, useReducedMotion } from "framer-motion";
 import PageHeader from "@/components/layout/PageHeader";
 import { blogPosts } from "@/data/blog";
 
 export default function BlogListClient() {
-  const reduce = useReducedMotion();
-
-  const v = {
-    wrap:  { show: { transition: { staggerChildren: 0.08, delayChildren: 0.05 } } },
-    head:  { hidden: { opacity: 0, y: reduce ? 0 : 10 }, show: { opacity: 1, y: 0, transition: { duration: .35 } } },
-    card:  { hidden: { opacity: 0, y: reduce ? 0 : 18, filter: reduce ? "none" : "blur(2px)" },
-             show:   { opacity: 1, y: 0, filter: "none", transition: { duration: .38, ease: "easeOut" } } },
-  };
-
   return (
     <>
-      {/* Başlık (animasyonlu) */}
-      <motion.div initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.5 }} variants={v.head}>
-        <PageHeader
-          title="ERZURUM TAKSİ BLOG"
-          breadcrumb={
-            <>
-              <Link href="/" className="hover:text-white">Anasayfa</Link>
-              <span className="mx-1 text-[#FFC000]">//</span>
-              <span aria-current="page">Blog</span>
-            </>
-          }
-        />
-      </motion.div>
+      <PageHeader
+        title="ERZURUM TAKSİ BLOG"
+        breadcrumb={
+          <>
+            <Link href="/" className="hover:text-white">Anasayfa</Link>
+            <span className="mx-1 text-[#FFC000]">//</span>
+            <span aria-current="page">Blog</span>
+          </>
+        }
+      />
 
-      {/* Liste */}
       <section className="py-16 bg-[#F2F3F5]" aria-labelledby="blog-title">
         <div className="max-w-[1184px] mx-auto px-5">
           <h1 id="blog-title" className="sr-only">Erzurum Taksi Blog Yazıları</h1>
 
-          <motion.div
-            className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3"
-            variants={v.wrap}
-            initial="hidden"
-            whileInView="show"
-            viewport={{ once: true, amount: 0.25 }}
-          >
-            {blogPosts.map((post: any) => (
-              <motion.article
+          <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+            {blogPosts.map((post: any, i: number) => (
+              <article
                 key={post.slug}
-                variants={v.card}
                 className="rounded-xl bg-white border border-black/5 shadow-[0_8px_30px_rgba(0,0,0,.08)]
-                           overflow-hidden flex flex-col hover:-translate-y-0.5 transition will-change-transform"
+                           overflow-hidden flex flex-col hover:-translate-y-0.5 transition will-change-transform
+                           motion-safe:animate-[fadeUp_.38s_ease-out_forwards]"
+                style={{ animationDelay: `calc(${i} * 60ms)` }}
                 itemScope
                 itemType="https://schema.org/BlogPosting"
                 aria-label={post.title}
               >
-                {/* Kapak görseli */}
                 <Link href={`/blog/${post.slug}`} aria-label={`${post.title} yazısını oku`}>
                   <div className="relative h-48 w-full">
                     <Image
@@ -69,7 +49,6 @@ export default function BlogListClient() {
                   </div>
                 </Link>
 
-                {/* İçerik */}
                 <div className="p-5 flex-1 flex flex-col">
                   <div className="flex items-center text-xs text-black/60 mb-3">
                     <time dateTime={post.date}><span className="mr-1">🕓</span>{post.date}</time>
@@ -97,9 +76,9 @@ export default function BlogListClient() {
                     Daha fazla
                   </Link>
                 </div>
-              </motion.article>
+              </article>
             ))}
-          </motion.div>
+          </div>
         </div>
       </section>
     </>

@@ -1,24 +1,7 @@
 // features/hero/HeroInfoCard.tsx
 import Script from "next/script";
-import { motion, useReducedMotion } from "framer-motion";
 
 export default function HeroInfoCard() {
-  const reduce = useReducedMotion();
-
-  const v = {
-    card: {
-      hidden: { opacity: 0, y: reduce ? 0 : 16, filter: reduce ? "none" : "blur(2px)" },
-      show:   { opacity: 1, y: 0, filter: "none", transition: { duration: 0.4, ease: "easeOut" } },
-    },
-    row: {
-      show: { transition: { staggerChildren: 0.08, delayChildren: 0.05 } },
-    },
-    item: {
-      hidden: { opacity: 0, y: reduce ? 0 : 10 },
-      show:   { opacity: 1, y: 0, transition: { duration: 0.35, ease: "easeOut" } },
-    },
-  };
-
   // JSON-LD: LocalBusiness (Taxi) + AggregateRating
   const jsonLd = {
     "@context": "https://schema.org",
@@ -52,33 +35,28 @@ export default function HeroInfoCard() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
 
-      <motion.div
-        variants={v.card}
-        initial="hidden"
-        whileInView="show"
-        viewport={{ once: true, amount: 0.35 }}
+      <div
         className="mx-auto w-[min(760px,92%)] rounded-3xl bg-[#ECEEF1] text-black
                    px-4 md:px-5 py-9 md:py-16 border border-black/5
-                   shadow-[0_20px_50px_rgba(0,0,0,.15)]"
+                   shadow-[0_20px_50px_rgba(0,0,0,.15)]
+                   motion-safe:opacity-0 motion-safe:animate-[fadeUp_.4s_ease-out_forwards]"
         role="complementary"
         aria-label="Hizmet özellikleri ve hızlı iletişim"
       >
         {/* içerik: solda özellikler, ortada puan, sağda CTA */}
-        <motion.div
-          className="grid items-center md:items-stretch gap-5 md:gap-6 md:grid-cols-[1fr_auto_auto]"
-          variants={v.row}
-        >
+        <div className="grid items-center md:items-stretch gap-5 md:gap-6 md:grid-cols-[1fr_auto_auto]">
           {/* SOL: özellikler */}
-          <motion.div className="flex flex-wrap items-center gap-2" variants={v.row}>
-            <motion.div variants={v.item}><FeaturePill icon="check">Güvenilir Hizmet</FeaturePill></motion.div>
-            <motion.div variants={v.item}><FeaturePill icon="bolt">Hızlı Ulaşım</FeaturePill></motion.div>
-            <motion.div variants={v.item}><FeaturePill icon="clock">7/24</FeaturePill></motion.div>
-          </motion.div>
+          <div className="flex flex-wrap items-center gap-2">
+            <FeaturePill index={0} icon="check">Güvenilir Hizmet</FeaturePill>
+            <FeaturePill index={1} icon="bolt">Hızlı Ulaşım</FeaturePill>
+            <FeaturePill index={2} icon="clock">7/24</FeaturePill>
+          </div>
 
           {/* ORTA: Google puanı */}
-          <motion.div
-            variants={v.item}
-            className="flex items-center gap-3 md:justify-self-center md:pl-5 md:border-l md:border-black/10"
+          <div
+            className="flex items-center gap-3 md:justify-self-center md:pl-5 md:border-l md:border-black/10
+                       motion-safe:opacity-0 motion-safe:animate-[fadeUp_.35s_ease-out_forwards]"
+            style={{ animationDelay: "90ms" }}
             itemScope
             itemType="https://schema.org/AggregateRating"
             aria-label="Google değerlendirme puanı"
@@ -90,20 +68,21 @@ export default function HeroInfoCard() {
             </span>
             <div className="leading-tight">
               <div className="font-extrabold text-[18px]">
-                <span itemProp="ratingValue">4.9</span> / <span itemProp="bestRating">5</span> <span className="font-semibold">Google</span>
+                <span itemProp="ratingValue">4.9</span> / <span itemProp="bestRating">5</span>{" "}
+                <span className="font-semibold">Google</span>
               </div>
               <div className="text-xs text-black/60">
                 <span itemProp="reviewCount">120</span>+ değerlendirme
               </div>
-              {/* mikrodata gerekli alan */}
               <meta itemProp="worstRating" content="1" />
             </div>
-          </motion.div>
+          </div>
 
           {/* SAĞ: CTA’lar */}
-          <motion.div
-            variants={v.item}
-            className="flex items-center gap-2.5 md:justify-self-end"
+          <div
+            className="flex items-center gap-2.5 md:justify-self-end
+                       motion-safe:opacity-0 motion-safe:animate-[fadeUp_.35s_ease-out_forwards]"
+            style={{ animationDelay: "140ms" }}
             aria-label="Hızlı iletişim seçenekleri"
           >
             <a
@@ -112,8 +91,7 @@ export default function HeroInfoCard() {
                          font-extrabold px-5 md:px-6 py-2.5 text-sm md:text-base
                          shadow-[0_10px_30px_rgba(255,192,0,.35)]
                          focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#FFC000]
-                         hover:translate-y-[-1px] active:translate-y-[0]
-                         transition will-change-transform"
+                         hover:-translate-y-0.5 active:translate-y-0 transition will-change-transform"
               aria-label="Hemen ara: 0506 023 77 36"
               data-cta="phone"
             >
@@ -139,17 +117,33 @@ export default function HeroInfoCard() {
               </svg>
               <span className="hidden sm:inline">WhatsApp</span>
             </a>
-          </motion.div>
-        </motion.div>
-      </motion.div>
+          </div>
+        </div>
+      </div>
+
+      {/* Keyframes – globalde zaten varsa bu bloğu silebilirsin */}
+      <style jsx>{`
+        @media (prefers-reduced-motion: no-preference) {
+          @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(16px); }
+            to   { opacity: 1; transform: translateY(0); }
+          }
+        }
+      `}</style>
     </>
   );
 }
 
-/* küçük yardımcı bileşen: daha sıkı rozetler + hafif animasyon */
-function FeaturePill({ icon, children }: { icon: "check" | "bolt" | "clock"; children: React.ReactNode }) {
-  const reduce = useReducedMotion();
-
+/* küçük yardımcı bileşen: daha sıkı rozetler + hafif animasyon (CSS-only) */
+function FeaturePill({
+  icon,
+  children,
+  index = 0,
+}: {
+  icon: "check" | "bolt" | "clock";
+  children: React.ReactNode;
+  index?: number;
+}) {
   const Icon = () => {
     if (icon === "check")
       return (
@@ -172,17 +166,15 @@ function FeaturePill({ icon, children }: { icon: "check" | "bolt" | "clock"; chi
   };
 
   return (
-    <motion.span
-      initial={{ opacity: 0, y: 8 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.6 }}
-      transition={{ duration: 0.28, ease: "easeOut" }}
-      whileHover={reduce ? undefined : { scale: 1.02 }}
+    <span
       className="inline-flex items-center gap-2 rounded-full bg-[#2B2B2B] text-white/90
-                 ring-1 ring-black/10 px-3 py-1.5 text-[13px]"
+                 ring-1 ring-black/10 px-3 py-1.5 text-[13px]
+                 transition will-change-transform hover:scale-[1.02]
+                 motion-safe:opacity-0 motion-safe:animate-[fadeUp_.28s_ease-out_forwards]"
+      style={{ animationDelay: `calc(${index} * 60ms)` }}
     >
       <Icon />
       <span className="font-semibold">{children}</span>
-    </motion.span>
+    </span>
   );
 }

@@ -1,45 +1,26 @@
 // app/iletisim/IletisimContentClient.tsx
 "use client";
 
-import { motion, useReducedMotion } from "framer-motion";
 import { site, telHref } from "@/config/site";
 
 export default function IletisimContentClient() {
-  const reduce = useReducedMotion();
   const waHref = `https://wa.me/${site.phone.replace(/\D/g, "")}`;
-
-  const v = {
-    wrap: { show: { transition: { staggerChildren: 0.08, delayChildren: 0.05 } } },
-    head: { hidden: { opacity: 0, y: reduce ? 0 : 10 }, show: { opacity: 1, y: 0, transition: { duration: 0.35 } } },
-    card: {
-      hidden: { opacity: 0, y: reduce ? 0 : 18, filter: reduce ? "none" : "blur(2px)" },
-      show:   { opacity: 1, y: 0, filter: "none", transition: { duration: 0.4, ease: "easeOut" } },
-    },
-  };
 
   return (
     <section className="py-12 md:py-16 bg-[#F2F3F5] text-black" aria-labelledby="contact-title">
       <div className="max-w-[1184px] mx-auto px-5">
-        <motion.div
-          variants={v.wrap}
-          initial="hidden"
-          whileInView="show"
-          viewport={{ once: true, amount: 0.3 }}
-          className="grid gap-8 md:grid-cols-2"
-        >
+        <div className="grid gap-8 md:grid-cols-2">
           {/* Kart */}
-          <motion.div
-            variants={v.card}
-            className="rounded-2xl bg-white border border-black/10 shadow-[0_12px_36px_rgba(0,0,0,.08)] p-6 md:p-8"
-            role="complementary"
-            aria-label="İletişim bilgileri"
+          <div
+            className="rounded-2xl bg-white border border-black/10 shadow-[0_12px_36px_rgba(0,0,0,.08)] p-6 md:p-8
+                       motion-safe:animate-[fadeUp_.4s_ease-out_forwards]"
           >
-            <motion.h1 id="contact-title" variants={v.head} className="text-2xl md:text-3xl font-extrabold tracking-wide">
+            <h1 id="contact-title" className="text-2xl md:text-3xl font-extrabold tracking-wide">
               Bize Ulaşın
-            </motion.h1>
-            <motion.p variants={v.head} className="mt-2 text-black/70">
+            </h1>
+            <p className="mt-2 text-black/70">
               7/24 hizmet veriyoruz. Hızlıca ulaşmak için arayabilir veya WhatsApp’tan yazabilirsiniz.
-            </motion.p>
+            </p>
 
             <div className="mt-6 space-y-4 text-sm">
               <InfoRow label="Telefon">
@@ -94,19 +75,19 @@ export default function IletisimContentClient() {
                 💬 WhatsApp
               </a>
             </div>
-          </motion.div>
+          </div>
 
           {/* Harita / görsel alanı */}
-          <motion.div
-            variants={v.card}
-            className="rounded-2xl bg-white border border-black/10 shadow-[0_12px_36px_rgba(0,0,0,.08)] p-2"
+          <div
+            className="rounded-2xl bg-white border border-black/10 shadow-[0_12px_36px_rgba(0,0,0,.08)] p-2
+                       motion-safe:animate-[fadeUp_.4s_ease-out_forwards]"
+            style={{ animationDelay: "60ms" }}
           >
-            {/* <iframe ... /> yerine placeholder */}
             <div className="grid place-items-center w-full h-[320px] md:h-[360px] rounded-xl bg-[#ECEEF1] text-black/50">
               Harita / Konum görseli
             </div>
-          </motion.div>
-        </motion.div>
+          </div>
+        </div>
       </div>
     </section>
   );

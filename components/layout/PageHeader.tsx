@@ -30,13 +30,16 @@ export default function PageHeader({
         {breadcrumb && (
           <nav
             aria-label="Ekmek kırıntısı"
-            className="text-sm text-white/70 mb-3"
+            className="text-sm text-white/70 mb-3 motion-safe:animate-[fadeIn_.3s_ease-out_forwards]"
           >
             {breadcrumb}
           </nav>
         )}
 
-        <h1 id="page-title" className="text-2xl md:text-3xl font-extrabold text-white tracking-wide">
+        <h1
+          id="page-title"
+          className="text-2xl md:text-3xl font-extrabold text-white tracking-wide motion-safe:animate-[fadeUp_.35s_ease-out_forwards]"
+        >
           {title}
         </h1>
       </div>

@@ -1,13 +1,12 @@
 // app/hizmetler/page.tsx
 import type { Metadata } from "next";
 import Script from "next/script";
-// ❌ framer-motion importunu kaldır
-// import { motion } from "framer-motion";
+import Link from "next/link";
 
+import PageHeader from "@/components/layout/PageHeader";
 import Services from "@/features/hizmetler/Services";
 import Fleet from "@/features/fleet/Fleet";
 import { services } from "@/data/services";
-import HeaderMotionClient from "./HeaderMotionClient";
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://example.com";
 const BRAND = "Saraybosna Taksi";
@@ -82,14 +81,20 @@ export default function HizmetlerPage() {
 
   return (
     <>
-      {/* Header animasyonu client bileşende */}
-      <HeaderMotionClient />
+      <PageHeader
+        title="ERZURUM TAKSİ HİZMETLERİ"
+        breadcrumb={
+          <>
+            <Link href="/" className="hover:text-white">Anasayfa</Link>
+            <span className="mx-1 text-[#FFC000]">//</span>
+            <span aria-current="page">Hizmetlerimiz</span>
+          </>
+        }
+      />
 
-      {/* İçerik */}
       <Services />
       <Fleet />
 
-      {/* JSON-LD */}
       <Script id="ld-json-breadcrumbs" type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdBreadcrumbs) }} />
       <Script id="ld-json-collectionpage" type="application/ld+json"

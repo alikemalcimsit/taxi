@@ -1,18 +1,16 @@
 // app/hizmetler/HeaderMotionClient.tsx
 "use client";
 
-import { motion } from "framer-motion";
-import PageHeader from "@/components/layout/PageHeader";
 import Link from "next/link";
-
-const fadeUp = {
-  hidden: { opacity: 0, y: 14 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.35, ease: "easeOut" } },
-};
+import PageHeader from "@/components/layout/PageHeader";
 
 export default function HeaderMotionClient() {
   return (
-    <motion.div initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.5 }} variants={fadeUp}>
+    <div
+      className="motion-safe:animate-[fadeUp_.35s_ease-out_forwards]"
+      // istersen küçük gecikme:
+      // style={{ animationDelay: "40ms" }}
+    >
       <PageHeader
         title="ERZURUM TAKSİ HİZMETLERİ"
         breadcrumb={
@@ -23,6 +21,6 @@ export default function HeaderMotionClient() {
           </>
         }
       />
-    </motion.div>
+    </div>
   );
 }

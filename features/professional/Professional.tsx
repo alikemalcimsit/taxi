@@ -1,18 +1,8 @@
 // features/professional/Professional.tsx
 import Image from "next/image";
 import Script from "next/script";
-import { motion, useReducedMotion } from "framer-motion";
 
 export default function Professional() {
-  const reduce = useReducedMotion();
-
-  const v = {
-    wrap:  { show: { transition: { staggerChildren: 0.08, delayChildren: 0.05 } } },
-    left:  { hidden: { opacity: 0, y: reduce ? 0 : 14 }, show: { opacity: 1, y: 0, transition: { duration: .4, ease: "easeOut" } } },
-    right: { hidden: { opacity: 0, y: reduce ? 0 : 18, filter: reduce ? "none" : "blur(2px)" },
-             show:   { opacity: 1, y: 0, filter: "none", transition: { duration: .45, ease: "easeOut" } } },
-  };
-
   // JSON-LD: Hizmet + hizmet verilen bölgeler
   const jsonLd = {
     "@context": "https://schema.org",
@@ -49,74 +39,80 @@ export default function Professional() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
 
       <div className="container py-12 md:py-16 grid items-center gap-10 md:grid-cols-2">
-        <motion.div
-          variants={v.wrap}
-          initial="hidden"
-          whileInView="show"
-          viewport={{ once: true, amount: 0.35 }}
-          className="space-y-0"
-        >
-          {/* Sol: başlık + içerik + CTA */}
-          <motion.p variants={v.left} className="text-[#FFC000] font-extrabold tracking-wide mb-1">
+        {/* Sol: başlık + içerik + CTA */}
+        <div className="space-y-0">
+          <p className="text-[#FFC000] font-extrabold tracking-wide mb-1 motion-safe:opacity-0 motion-safe:animate-[fadeUp_.4s_ease-out_forwards]">
             Erzurum Saraybosna Taksi
-          </motion.p>
+          </p>
 
-          <motion.h2
+          <h2
             id="professional-title"
-            variants={v.left}
-            className="text-3xl md:text-4xl font-extrabold leading-tight mb-4"
+            className="text-3xl md:text-4xl font-extrabold leading-tight mb-4
+                       motion-safe:opacity-0 motion-safe:animate-[fadeUp_.45s_ease-out_.05s_forwards]"
           >
             Tam Anlamıyla Profesyonel<br />Hizmet
-          </motion.h2>
+          </h2>
 
-          <motion.p variants={v.left} className="text-white/80 leading-7 text-[15px] md:text-base max-w-xl">
+          <p
+            className="text-white/80 leading-7 text-[15px] md:text-base max-w-xl
+                       motion-safe:opacity-0 motion-safe:animate-[fadeUp_.45s_ease-out_.1s_forwards]"
+          >
             Erzurum Merkez ve ilçelerine hizmet veriyoruz. Günün her saati 7/24
             nöbetçi araçlarımızla güvenilir ve konforlu taşımacılık sağlıyoruz.
             Yakutiye, Palandöken, Aziziye, Atatürk Üniversitesi, Erzurum Teknik Üniversitesi,
             Otogar ve Havalimanı transferleri için bizi arayın.
-          </motion.p>
+          </p>
 
-          <motion.a
-            variants={v.left}
+          <a
             href="tel:+905060237736"
             aria-label="Hemen ara: 0506 023 77 36"
             className="inline-flex items-center gap-2 mt-6 rounded-full bg-[#FFC000] text-black
                        font-extrabold px-6 py-3 shadow-[0_10px_30px_rgba(255,192,0,.30)]
-                       focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#FFC000] transition"
-            whileHover={reduce ? undefined : { y: -1 }}
-            whileTap={{ y: 0 }}
+                       focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#FFC000] transition
+                       hover:-translate-y-0.5 active:translate-y-0
+                       motion-safe:opacity-0 motion-safe:animate-[fadeUp_.45s_ease-out_.15s_forwards]"
             data-cta="phone"
           >
             Hemen Ara <span className="text-lg">📞</span>
-          </motion.a>
-        </motion.div>
+          </a>
+        </div>
 
         {/* Sağ: araç görseli */}
-        <motion.div
-          variants={v.right}
-          initial="hidden"
-          whileInView="show"
-          viewport={{ once: true, amount: 0.25 }}
-          className="relative"
+        <div
+          className="relative motion-safe:opacity-0 motion-safe:animate-[fadeUp_.45s_ease-out_.12s_forwards]"
         >
-          <motion.div
-            animate={reduce ? undefined : { y: [0, -8, 0] }}
-            transition={reduce ? undefined : { duration: 6, repeat: Infinity, ease: "easeInOut" }}
-            className="relative"
-          >
+          <div className="relative motion-safe:animate-[floatY_.6s_linear_0s_1_normal_none, floatLoop_6s_ease-in-out_.2s_infinite]">
             <Image
-              src="/images/car-pro.png"         // şeffaf PNG
+              src="/images/car-pro.png"
               alt="Saraybosna Taksi aracı ile profesyonel hizmet"
               width={640}
               height={360}
-              priority={false}                  // LCP etkisini azaltmak için hero dışında önceliksiz
+              priority={false}
               sizes="(max-width: 768px) 90vw, 640px"
               className="mx-auto h-auto w-[min(90%,640px)]
                          drop-shadow-[0_36px_90px_rgba(255,192,0,.35)]"
             />
-          </motion.div>
-        </motion.div>
+          </div>
+        </div>
       </div>
+
+      {/* Keyframes – globalde tanımlıysa kaldırabilirsin */}
+      <style jsx>{`
+        @media (prefers-reduced-motion: no-preference) {
+          @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(16px); }
+            to   { opacity: 1; transform: translateY(0); }
+          }
+          /* başlangıçta küçük bir settle efekti */
+          @keyframes floatY { from { transform: translateY(12px); } to { transform: translateY(0); } }
+          /* sürekli yumuşak dalgalanma */
+          @keyframes floatLoop {
+            0%   { transform: translateY(0); }
+            50%  { transform: translateY(-8px); }
+            100% { transform: translateY(0); }
+          }
+        }
+      `}</style>
     </section>
   );
 }
