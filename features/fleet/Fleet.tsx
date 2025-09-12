@@ -31,7 +31,7 @@ export default function Fleet() {
         image: toAbsoluteUrl(v.img),
         brand: site?.name || "Taxi Fleet",
         url: v.href ? toAbsoluteUrl(v.href) : undefined,
-        telephone: "+90 506 023 77 36",
+  telephone: "+90 535 365 65 67",
       },
     })),
   };
@@ -99,8 +99,8 @@ export default function Fleet() {
 
                 <div className="mt-auto flex gap-2">
                   <a
-                    href="tel:+905060237736"
-                    aria-label="Hemen ara: +90 506 023 77 36"
+                    href="tel:+905353656567"
+                    aria-label="Hemen ara: +90 535 365 65 67"
                     className="flex-1 rounded-full bg-[#FFC000] text-black text-sm font-extrabold py-2 text-center
                                focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#FFC000]"
                     data-cta="phone"
@@ -109,7 +109,7 @@ export default function Fleet() {
                   </a>
 
                   <a
-                    href={v.href || "/araclar"}
+                    href="/hizmetler"
                     className="flex-1 rounded-full bg-black/5 text-black text-sm font-extrabold py-2 text-center
                                hover:bg-black/10 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-black/20"
                     aria-label={`${v.name} detayları`}

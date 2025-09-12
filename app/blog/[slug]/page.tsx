@@ -89,16 +89,25 @@ export default async function BlogPostPage(
   const next = blogPosts[index + 1];
 
   // JSON-LD: Article + Breadcrumbs
+  const wordCount = post.content ? post.content.trim().split(/\s+/).length : undefined;
   const articleLd = {
     "@context": "https://schema.org",
-    "@type": "BlogPosting",
+    "@type": "Article",
     headline: post.title,
     description: post.excerpt,
-    image: post.image ? abs(post.image) : FALLBACK_OG, // <- image (tekil) ve string
+    image: [
+      {
+        "@type": "ImageObject",
+        url: post.image ? abs(post.image) : FALLBACK_OG,
+      }
+    ],
     datePublished: post.date,
     dateModified: post.date,
     url: `${SITE_URL}/blog/${post.slug}`,
-    mainEntityOfPage: `${SITE_URL}/blog/${post.slug}`,
+    mainEntityOfPage: {
+      "@type": "WebPage",
+      "@id": `${SITE_URL}/blog/${post.slug}`,
+    },
     author: post.author
       ? { "@type": "Person", name: post.author }
       : { "@type": "Organization", name: "Saraybosna Taksi" },
@@ -107,9 +116,20 @@ export default async function BlogPostPage(
       name: "Saraybosna Taksi",
       logo: {
         "@type": "ImageObject",
-        url: `${SITE_URL}/icons/apple-touch-icon.png`,
+        url: `${SITE_URL}/images/logo.png`,
       },
     },
+    wordCount,
+    articleSection: "Taksi & Ulaşım",
+    inLanguage: "tr-TR",
+    isAccessibleForFree: true,
+    speakable: {
+      "@type": "SpeakableSpecification",
+      xpath: [
+        "/html/head/title",
+        "//h1"
+      ]
+    }
   };
 
   const breadcrumbsLd = {
@@ -141,7 +161,7 @@ export default async function BlogPostPage(
             <div className="relative h-60 md:h-80 w-full rounded-xl overflow-hidden -mt-6 md:-mt-8 shadow-[0_20px_60px_rgba(0,0,0,.25)]">
               <Image
                 src={post.image}
-                alt={post.title}
+                alt={post.imageAlt || post.title}
                 fill
                 className="object-cover"
                 sizes="(min-width:1024px) 1184px, 100vw"
@@ -186,9 +206,12 @@ export default async function BlogPostPage(
               />
             </div>
 
-            <article className="prose max-w-none prose-p:leading-relaxed prose-headings:font-extrabold prose-h2:text-[22px] prose-h3:text-[18px] prose-a:text-[#111316] prose-a:underline text-justify">
-              {post.content}
-            </article>
+            <article
+              className="prose max-w-none prose-p:leading-relaxed prose-headings:font-extrabold prose-h2:text-[22px] prose-h3:text-[18px] prose-a:text-[#111316] prose-a:underline text-justify overflow-x-auto"
+              // İçerik internal kaynaktan (data/blog.ts) geldiği için güvenli kabul edilip HTML olarak işleniyor.
+              // Harici kullanıcı girdisi ileride eklenecekse sanitize eklenmeli.
+              dangerouslySetInnerHTML={{ __html: post.content }}
+            />
 
             <div className="my-10 h-px bg-black/10" />
 

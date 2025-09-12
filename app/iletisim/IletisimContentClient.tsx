@@ -2,6 +2,7 @@
 "use client";
 
 import { site, telHref } from "@/config/site";
+import Image from "next/image";
 
 export default function IletisimContentClient() {
   const waHref = `https://wa.me/${site.phone.replace(/\D/g, "")}`;
@@ -77,15 +78,23 @@ export default function IletisimContentClient() {
             </div>
           </div>
 
-          {/* Harita / görsel alanı */}
+          {/* Harita / görsel alanı (güncellendi: static image) */}
           <div
             className="rounded-2xl bg-white border border-black/10 shadow-[0_12px_36px_rgba(0,0,0,.08)] p-2
                        motion-safe:animate-[fadeUp_.4s_ease-out_forwards]"
             style={{ animationDelay: "60ms" }}
           >
-            <div className="grid place-items-center w-full h-[320px] md:h-[360px] rounded-xl bg-[#ECEEF1] text-black/50">
-              Harita / Konum görseli
-            </div>
+            <figure className="relative w-full h-[320px] md:h-[360px] rounded-xl overflow-hidden">
+              <Image
+                src="/images/image (8).jpeg"
+                alt="Saraybosna Taksi iletişim bölümü — Erzurum merkez servis alanı görseli"
+                fill
+                className="object-cover"
+                sizes="(min-width:768px) 50vw, 100vw"
+                priority={false}
+              />
+              <figcaption className="sr-only">Erzurum Saraybosna Taksi hizmet bölgesi temsili görsel</figcaption>
+            </figure>
           </div>
         </div>
       </div>

@@ -11,7 +11,7 @@ export default function Professional() {
     provider: {
       "@type": "LocalBusiness",
       name: "Erzurum Saraybosna Taksi",
-      telephone: "+90 506 023 77 36",
+  telephone: "+90 535 365 65 67",
       areaServed: [
         "Erzurum Merkez", "Yakutiye", "Palandöken", "Aziziye",
         "Atatürk Üniversitesi", "Erzurum Teknik Üniversitesi", "Otogar", "Havalimanı"
@@ -19,7 +19,7 @@ export default function Professional() {
       url: process.env.NEXT_PUBLIC_SITE_URL || ""
     },
     serviceType: "Taksi • Havalimanı Transfer • Şehir içi/Şehirler arası",
-    availableChannel: { "@type": "ServiceChannel", servicePhone: { "@type": "ContactPoint", telephone: "+90 506 023 77 36" } }
+  availableChannel: { "@type": "ServiceChannel", servicePhone: { "@type": "ContactPoint", telephone: "+90 535 365 65 67" } }
   };
 
   return (
@@ -45,8 +45,8 @@ export default function Professional() {
           </p>
 
           <a
-            href="tel:+905060237736"
-            aria-label="Hemen ara: 0506 023 77 36"
+            href="tel:+905353656567"
+            aria-label="Hemen ara: 0535 365 65 67"
             className="inline-flex items-center gap-2 mt-6 rounded-full bg-[#FFC000] text-black font-extrabold px-6 py-3 shadow-[0_10px_30px_rgba(255,192,0,.30)] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#FFC000] transition hover:-translate-y-0.5 active:translate-y-0 motion-safe:opacity-0 motion-safe:animate-[fadeUp_.45s_ease-out_.15s_forwards]"
             data-cta="phone"
           >

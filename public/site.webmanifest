@@ -1,0 +1,18 @@
+{
+  "name": "Saraybosna Taksi - Erzurum 7/24 Taksi",
+  "short_name": "Saraybosna Taksi",
+  "description": "Erzurum 7/24 taksi ve havalimanı transfer hizmeti. Güvenli, konforlu, hızlı ulaşım.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#0B0C0E",
+  "theme_color": "#FFC000",
+  "lang": "tr-TR",
+  "dir": "ltr",
+  "orientation": "portrait-primary",
+  "icons": [
+    { "src": "/images/logo.png", "sizes": "144x144", "type": "image/png", "purpose": "any" },
+    { "src": "/images/logo.png", "sizes": "256x256", "type": "image/png", "purpose": "any" },
+    { "src": "/images/logo.png", "sizes": "512x512", "type": "image/png", "purpose": "any" }
+  ]
+}

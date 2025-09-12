@@ -7,6 +7,7 @@ import Services from "@/features/hizmetler/Services";
 import Professional from "@/features/professional/Professional";
 import Fleet from "@/features/fleet/Fleet";
 import Testimonials from "@/features/testimonials/Testimonials";
+import FAQ from "@/features/faq/FAQ";
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://example.com";
 const BRAND = "Saraybosna Taksi";
@@ -85,6 +86,7 @@ export default function HomePage() {
       <Professional />
       <Fleet />
       <Testimonials />
+  <FAQ />
     </>
   );
 }

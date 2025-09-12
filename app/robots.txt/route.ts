@@ -21,20 +21,23 @@ function getBaseUrl(req: Request) {
 export async function GET(req: Request) {
   const base = getBaseUrl(req);
 
-  const content = [
+  const lines: string[] = [
     "User-agent: *",
     "Allow: /",
     "",
-
-    // Örnek dışlamalar (varsa yorumdan çıkar)
+    // Örnek dışlamalar (kullanmak istersen aç):
     // "Disallow: /api/private",
     // "Disallow: /admin",
-    // "Disallow: /_next/static/",  // Genelde gerek yok; Next kendi yönetiyor
-    // "Disallow: /search?*",       // Arama sayfası varsa taranmasını istemeyebilirsin
-
-    // Site haritası
+    // "Disallow: /draft/",
+    // "Disallow: /*?preview=",
+    // TARANMASINI İSTEMEDİĞİN query patternleri için (Google wildcards sınırlı)
+    // "Disallow: /*?*utm_",
+    "",
     `Sitemap: ${base}/sitemap.xml`,
-  ].join("\n");
+    `Host: ${base}`,
+  ];
+
+  const content = lines.join("\n");
 
   return new NextResponse(content, { headers: { "Content-Type": "text/plain; charset=utf-8" } });
 }

@@ -74,7 +74,7 @@ export default function HizmetlerPage() {
         description: it.desc,
         image: it.icon ? new URL(it.icon, SITE_URL).toString() : undefined,
         areaServed: "Erzurum, Türkiye",
-        provider: { "@type": "LocalBusiness", name: BRAND, telephone: "+90 506 023 77 36" },
+  provider: { "@type": "LocalBusiness", name: BRAND, telephone: "+90 535 365 65 67" },
       },
     })),
   };

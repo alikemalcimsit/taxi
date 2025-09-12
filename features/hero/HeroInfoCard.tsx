@@ -8,10 +8,10 @@ export default function HeroInfoCard() {
     "@type": "LocalBusiness",
     name: "Erzurum Saraybosna Taksi",
     image: (process.env.NEXT_PUBLIC_SITE_URL || "") + "/images/car-hero.png",
-    telephone: "+90 506 023 77 36",
+  telephone: "+90 535 365 65 67",
     areaServed: "Erzurum, Türkiye",
     url: process.env.NEXT_PUBLIC_SITE_URL || "",
-    sameAs: ["https://wa.me/905060237736"],
+  sameAs: ["https://wa.me/905353656567"],
     aggregateRating: { "@type": "AggregateRating", ratingValue: "4.9", reviewCount: "120", bestRating: "5", worstRating: "1" },
     department: { "@type": "TaxiService", name: "Taksi Hizmeti", availableLanguage: ["tr-TR"] },
   };
@@ -59,9 +59,9 @@ export default function HeroInfoCard() {
             aria-label="Hızlı iletişim seçenekleri"
           >
             <a
-              href="tel:+905060237736"
+              href="tel:+905353656567"
               className="inline-flex items-center gap-2 rounded-full bg-[#FFC000] text-black font-extrabold px-5 md:px-6 py-2.5 text-sm md:text-base shadow-[0_10px_30px_rgba(255,192,0,.35)] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#FFC000] hover:-translate-y-0.5 active:translate-y-0 transition will-change-transform"
-              aria-label="Hemen ara: 0506 023 77 36"
+              aria-label="Hemen ara: 0535 365 65 67"
               data-cta="phone"
             >
               <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden><path d="M6.62 10.79a15.05 15.05 0 006.59 6.59l2.2-2.2a1 1 0 011.01-.24 11.36 11.36 0 003.56.57 1 1 0 011 1V20a1 1 0 01-1 1A17 17 0 013 4a1 1 0 011-1h3.5a1 1 0 011 1 11.36 11.36 0 00.57 3.56 1 1 0 01-.24 1.01l-2.2 2.2z"/></svg>
@@ -69,7 +69,7 @@ export default function HeroInfoCard() {
             </a>
 
             <a
-              href="https://wa.me/905060237736"
+              href="https://wa.me/905353656567"
               target="_blank"
               rel="noopener"
               aria-label="WhatsApp ile mesaj gönder"

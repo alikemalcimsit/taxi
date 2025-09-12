@@ -33,7 +33,7 @@ body {
   --shadow-lg:0 30px 80px rgba(0,0,0,.35);
   --shadow-md:0 14px 36px rgba(0,0,0,.16);
 }
-html,body{background:var(--bg-dark);color:var(--ink);}
+html,body{background:var(--bg-dark);color:var(--ink);overflow-x:hidden;}
 .checker{height:10px;background:repeating-linear-gradient(90deg,var(--brand) 0 18px,#0b0c0e 18px 36px);}
 .container{max-width:1184px;margin:0 auto;padding:0 20px;}
 @media (prefers-reduced-motion: no-preference) {

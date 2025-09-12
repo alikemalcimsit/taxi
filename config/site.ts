@@ -19,13 +19,15 @@ export const SITE_URL =
 
 export const site: SiteConfig = {
   name: "Saraybosna Taksi",
-  phone: "+90 506 023 77 36",
+  // Updated phone number (previous: +90 506 023 77 36)
+  phone: "+90 535 365 65 67",
   address: "Erzurum",
   addressTitle: "Adres:",
   url: SITE_URL,           // <- eklendi
   social: {
-    whatsapp: "https://wa.me/905060237736",
+    // Updated WhatsApp link to match new number (international format without +)
+    whatsapp: "https://wa.me/905353656567",
   },
 };
 
-export const telHref = `tel:${site.phone.replace(/\D/g, "")}`;
+export const telHref = `tel:${site.phone.replace(/\D/g, "")}`; // => tel:+905353656567

@@ -25,7 +25,7 @@ export default function Services() {
         description: it.desc,
         image: toAbs(it.icon),
         areaServed: "Erzurum, Türkiye",
-        provider: { "@type": "LocalBusiness", name: "Erzurum Saraybosna Taksi", telephone: "+90 506 023 77 36" },
+  provider: { "@type": "LocalBusiness", name: "Erzurum Saraybosna Taksi", telephone: "+90 535 365 65 67" },
       },
     })),
   };

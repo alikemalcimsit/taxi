@@ -15,7 +15,7 @@ export default function Testimonials() {
     "@type": "LocalBusiness",
     name: "Erzurum Saraybosna Taksi",
     url: process.env.NEXT_PUBLIC_SITE_URL || "",
-    telephone: "+90 506 023 77 36",
+  telephone: "+90 535 365 65 67",
     aggregateRating: {
       "@type": "AggregateRating",
       ratingValue: avg,

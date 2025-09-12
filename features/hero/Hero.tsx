@@ -11,7 +11,7 @@ export default function Hero() {
     name: "Erzurum Saraybosna Taksi",
     areaServed: "Erzurum, Türkiye",
     url: process.env.NEXT_PUBLIC_SITE_URL || "",
-    telephone: "+90 506 023 77 36",
+  telephone: "+90 535 365 65 67",
     image: (process.env.NEXT_PUBLIC_SITE_URL || "") + "/images/car-hero.png",
     serviceType: "Taksi • Havalimanı Transfer • Şehir İçi/Uzak Yol",
     availableLanguage: ["tr-TR"],
@@ -24,7 +24,7 @@ export default function Hero() {
 
       {/* ARKA PLAN + overlay */}
       <div className="absolute inset-0 z-0 h-[700px] md:h-[850px] overflow-hidden" aria-hidden>
-        <Image src="/images/bg-erzurum.jpg" alt="" fill priority sizes="100vw" className="object-cover" />
+        <Image src="/images/Erzurum-2.jpg" alt="" fill priority sizes="100vw" className="object-cover opacity-90" />
         <div className="absolute inset-0 bg-black/55" />
         <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-b from-transparent to-[#F2F3F5]" />
       </div>
@@ -33,9 +33,9 @@ export default function Hero() {
       <div className="relative z-10 container pt-6 pb-24 md:pb-32">
         {/* TELEFON PILL */}
         <div className="mx-auto relative top-6 md:top-10 w-fit rounded-full border border-white/25 bg-black/35 backdrop-blur px-6 py-3 shadow-[0_10px_30px_rgba(0,0,0,.35)] z-20 motion-safe:opacity-0 motion-safe:animate-[fadeUp_.4s_ease-out_forwards]">
-          <a href="tel:+905060237736" className="inline-flex items-center gap-3 font-extrabold text-[18px] text-[#FFC000] focus:outline-none focus:ring-2 focus:ring-[#FFC000] rounded-full" aria-label="Hemen ara: 0506 023 77 36">
+          <a href="tel:+905353656567" className="inline-flex items-center gap-3 font-extrabold text-[18px] text-[#FFC000] focus:outline-none focus:ring-2 focus:ring-[#FFC000] rounded-full" aria-label="Hemen ara: 0535 365 65 67">
             <span className="grid place-items-center w-9 h-9 rounded-full bg-[#FFC000] text-black">📞</span>
-            0506 023 77 36
+            0535 365 65 67
           </a>
         </div>
 
@@ -43,7 +43,7 @@ export default function Hero() {
         <div className="mt-20 mb-20 text-center motion-safe:opacity-0 motion-safe:animate-[fadeUp_.45s_ease-out_.05s_forwards]">
           <div className="text-[#FFC000] font-extrabold tracking-wide">Erzurum’un En İyi Taksisi</div>
           <h1 id="hero-title" className="mt-1 text-3xl md:text-5xl font-extrabold">ERZURUM SARAYBOSNA TAKSİ</h1>
-          <p className="mt-3 max-w-2xl mx-auto text-white/85">7/24 güvenli ve konforlu ulaşım. Havalimanı transferi, şehir içi ve şehirler arası hizmet.</p>
+          <p className="mt-3 max-w-2xl mx-auto text-white">7/24 güvenli ve konforlu ulaşım. Havalimanı transferi, şehir içi ve şehirler arası hizmet.</p>
         </div>
 
         {/* dev TAKSİ yazısı */}
