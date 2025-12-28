@@ -5,35 +5,37 @@ import Link from "next/link";
 import PageHeader from "@/components/layout/PageHeader";
 import { site } from "@/config/site";
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://example.com";
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://erzurumtaksici.com";
 
 export const metadata: Metadata = {
-  title: "İletişim | Saraybosna Taksi",
+  title: "İletişim | Erzurum Taksi Telefon Numarası",
   description:
-    "Saraybosna Taksi ile 7/24 iletişim: telefon ve WhatsApp üzerinden hızlıca ulaşın. Erzurum için güvenli ve konforlu taksi.",
+    "Erzurum taksi telefon numarası: 0535 365 65 67. 7/24 WhatsApp ve telefon ile hızlıca ulaşın. Erzurum taksici olarak güvenli ve konforlu taksi hizmeti.",
   alternates: { canonical: "/iletisim" },
   openGraph: {
     type: "website",
     url: `${SITE_URL}/iletisim`,
-    title: "İletişim | Saraybosna Taksi",
+    title: "İletişim | Erzurum Taksi Numarası",
     description:
-      "Erzurum’da 7/24 taksi. Telefon ve WhatsApp ile bize hemen ulaşın.",
-    images: [{ url: "/og/og-cover.jpg", width: 1200, height: 630, alt: "Saraybosna Taksi" }],
+      "Erzurum taksi numarası: 0535 365 65 67. Telefon ve WhatsApp ile 7/24 bize ulaşın.",
+    images: [{ url: "/og/og-cover.jpg", width: 1200, height: 630, alt: "Erzurum Taksici İletişim" }],
     locale: "tr_TR",
-    siteName: "Saraybosna Taksi",
+    siteName: "Erzurum Taksici",
   },
   twitter: {
     card: "summary_large_image",
-    title: "İletişim | Saraybosna Taksi",
-    description: "Telefon ve WhatsApp ile bize ulaşın.",
+    title: "İletişim | Erzurum Taksi",
+    description: "Erzurum taksi numarası: 0535 365 65 67. Telefon ve WhatsApp ile bize ulaşın.",
     images: ["/og/og-cover.jpg"],
   },
   keywords: [
     "Erzurum taksi iletişim",
     "Erzurum taksi telefon",
-    "Saraybosna Taksi",
+    "Erzurum taksi numarası",
+    "Erzurum taksici telefon",
+    "Saraybosna Taksi iletişim",
     "Erzurum 7/24 taksi",
-    "Erzurum havalimanı taksi",
+    "Erzurum havalimanı taksi telefon",
   ],
 };
 

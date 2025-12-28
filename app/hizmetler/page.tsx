@@ -8,11 +8,11 @@ import Services from "@/features/hizmetler/Services";
 import Fleet from "@/features/fleet/Fleet";
 import { services } from "@/data/services";
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://example.com";
-const BRAND = "Saraybosna Taksi";
-const TITLE = "Erzurum Taksi Hizmetleri | Saraybosna Taksi";
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://erzurumtaksici.com";
+const BRAND = "Erzurum Taksici";
+const TITLE = "Erzurum Taksi Hizmetleri | Havalimanı Transfer, VIP Taksi";
 const DESC =
-  "Erzurum’da 7/24 taksi, havalimanı/otogar transfer, şehir içi ve şehirler arası yolculuk. Profesyonel ve güvenilir hizmetlerimizi keşfedin.";
+  "Erzurum taksi hizmetleri: 7/24 şehir içi taksi, havalimanı transfer, Palandöken kayak merkezi transfer, VIP taksi ve şehirler arası transfer. Profesyonel sürücüler, konforlu araçlar. Hemen arayın: 0535 365 65 67";
 
 export const metadata: Metadata = {
   title: TITLE,
@@ -22,17 +22,22 @@ export const metadata: Metadata = {
     "Erzurum taksi hizmetleri",
     "Erzurum havalimanı transfer",
     "Erzurum şehir içi taksi",
-    "Saraybosna Taksi",
+    "Palandöken transfer",
+    "Erzurum VIP taksi",
+    "Erzurum otogar taksi",
+    "Erzurum şehirler arası taksi",
     "Yakutiye Palandöken Aziziye taksi",
+    "Saraybosna Taksi hizmetler",
+    "Erzurum taksici hizmetleri",
   ],
   openGraph: {
     type: "website",
     url: `${SITE_URL}/hizmetler`,
-    siteName: BRAND,
+    siteName: "Erzurum Taksici",
     title: TITLE,
     description: DESC,
     locale: "tr_TR",
-    images: [{ url: "/og/og-cover.jpg", width: 1200, height: 630, alt: BRAND }],
+    images: [{ url: "/og/og-cover.jpg", width: 1200, height: 630, alt: "Erzurum Taksi Hizmetleri" }],
   },
   twitter: {
     card: "summary_large_image",

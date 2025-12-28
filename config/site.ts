@@ -15,15 +15,15 @@ export type SiteConfig = {
   };
 };
 export const SITE_URL =
-  process.env.NEXT_PUBLIC_SITE_URL || "https://example.com";
+  process.env.NEXT_PUBLIC_SITE_URL || "https://erzurumtaksici.com";
 
 export const site: SiteConfig = {
-  name: "Saraybosna Taksi",
+  name: "Erzurum Taksici | Saraybosna Taksi",
   // Updated phone number (previous: +90 506 023 77 36)
   phone: "+90 535 365 65 67",
-  address: "Erzurum",
+  address: "Erzurum Merkez, Türkiye",
   addressTitle: "Adres:",
-  url: SITE_URL,           // <- eklendi
+  url: SITE_URL,
   social: {
     // Updated WhatsApp link to match new number (international format without +)
     whatsapp: "https://wa.me/905353656567",

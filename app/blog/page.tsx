@@ -4,36 +4,40 @@ import Script from "next/script";
 import BlogListClient from "./BlogListClient";
 import { blogPosts } from "@/data/blog";
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://example.com";
-const BRAND = "Saraybosna Taksi";
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://erzurumtaksici.com";
+const BRAND = "Erzurum Taksici";
 
 export const metadata: Metadata = {
-  title: "Erzurum Taksi Blog | Saraybosna Taksi",
+  title: "Erzurum Taksi Blog | Fiyatlar, Rehberler, İpuçları",
   description:
-    "Erzurum’da taksi ve transfer hakkında ipuçları, güzergâhlar, fiyatlar ve faydalı bilgiler.",
+    "Erzurum taksi ücretleri 2025, havalimanı transfer fiyatları, Palandöken transfer rehberi ve taksi ipuçları. Erzurum taksici blog sayfası.",
   alternates: { canonical: "/blog" },
   openGraph: {
     type: "website",
     url: `${SITE_URL}/blog`,
-    siteName: BRAND,
-    title: "Erzurum Taksi Blog | Saraybosna Taksi",
+    siteName: "Erzurum Taksici",
+    title: "Erzurum Taksi Blog | Fiyatlar ve Rehberler",
     description:
-      "Taksi ve transfer rehberleri, ipuçları ve güncel içerikler.",
-    images: [{ url: "/og/og-cover.jpg", width: 1200, height: 630, alt: BRAND }],
+      "Erzurum taksi fiyatları, transfer rehberleri ve güncel içerikler.",
+    images: [{ url: "/og/og-cover.jpg", width: 1200, height: 630, alt: "Erzurum Taksi Blog" }],
     locale: "tr_TR",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Erzurum Taksi Blog | Saraybosna Taksi",
+    title: "Erzurum Taksi Blog",
     description:
-      "Taksi ve transfer rehberleri, ipuçları ve güncel içerikler.",
+      "Erzurum taksi fiyatları, transfer rehberleri ve güncel içerikler.",
     images: ["/og/og-cover.jpg"],
   },
   keywords: [
     "Erzurum taksi blog",
+    "Erzurum taksi fiyatları",
+    "Erzurum taksi ücretleri 2025",
     "Erzurum transfer rehberi",
-    "taksi fiyatları Erzurum",
+    "Erzurum havalimanı transfer fiyat",
+    "Palandöken transfer",
     "Saraybosna Taksi blog",
+    "Erzurum taksici rehber",
   ],
 };
 

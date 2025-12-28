@@ -5,12 +5,12 @@ import "./globals.css";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 
-// .env: NEXT_PUBLIC_SITE_URL=https://www.ornekalanadi.com
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://example.com";
-const BRAND = "Saraybosna Taksi";
-const TITLE_DEFAULT = `${BRAND} | Erzurum 7/24`;
+// .env: NEXT_PUBLIC_SITE_URL=https://erzurumtaksici.com
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://erzurumtaksici.com";
+const BRAND = "Erzurum Taksici";
+const TITLE_DEFAULT = `Erzurum Taksi | Erzurum Taksici - 7/24 Güvenli Ulaşım`;
 const DESC =
-  "Erzurum’da 7/24 güvenli ve konforlu taksi. Havalimanı, otogar ve şehir içi/şehirler arası transfer.";
+  "Erzurum taksi hizmeti arayanlar için en güvenilir adres! Erzurum taksici olarak 7/24 havalimanı transferi, şehir içi taksi, şehirler arası transfer ve VIP araç hizmeti sunuyoruz. Hemen arayın: 0535 365 65 67";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -20,13 +20,29 @@ export const metadata: Metadata = {
   },
   description: DESC,
   keywords: [
+    // Ana hedef anahtar kelimeler
     "Erzurum taksi",
+    "Erzurum taksici",
+    "Erzurum taksi numarası",
+    "Erzurum taksi telefon",
+    // Konum bazlı
+    "Erzurum havalimanı taksi",
     "Erzurum havaalanı transfer",
     "Erzurum otogar taksi",
-    "Saraybosna Taksi",
+    "Erzurum merkez taksi",
+    // İlçe bazlı
     "Yakutiye taksi",
     "Palandöken taksi",
     "Aziziye taksi",
+    // Hizmet bazlı
+    "Erzurum VIP taksi",
+    "Erzurum 7/24 taksi",
+    "Erzurum gece taksi",
+    "Erzurum transfer hizmeti",
+    "Erzurum şehirlerarası taksi",
+    // Marka
+    "Saraybosna Taksi Erzurum",
+    "erzurumtaksici",
   ],
   alternates: {
     canonical: "/",
@@ -34,7 +50,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     url: SITE_URL,
-    siteName: BRAND,
+    siteName: "Erzurum Taksici",
     title: TITLE_DEFAULT,
     description: DESC,
     locale: "tr_TR",
@@ -43,7 +59,7 @@ export const metadata: Metadata = {
         url: "/images/logo.png",
         width: 512,
         height: 512,
-        alt: `${BRAND} Logo`,
+        alt: `Erzurum Taksi - Erzurum Taksici Logo`,
       },
     ],
   },
@@ -77,11 +93,15 @@ export const metadata: Metadata = {
     ],
     shortcut: ["/favicon.ico"],
   },
-  manifest: "/site.webmanifest", // public/site.webmanifest
-  applicationName: BRAND,
+  manifest: "/site.webmanifest",
+  applicationName: "Erzurum Taksici",
   category: "transportation",
-  // DNS prefetch / preconnect için <Head> gerekmez; Next otomatik optimize eder.
-  // İstersen fonts için _document kullanmadan link preload da ekleyebiliriz.
+  other: {
+    "geo.region": "TR-25",
+    "geo.placename": "Erzurum",
+    "geo.position": "39.9055;41.2658",
+    "ICBM": "39.9055, 41.2658",
+  },
 };
 
 // Ek viewport (CLS/LCP ve notch desteği)
@@ -98,45 +118,68 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   // Site geneli LocalBusiness JSON-LD (arama motorları için)
   const jsonLd = {
     "@context": "https://schema.org",
-    "@type": "LocalBusiness",
-    name: BRAND,
+    "@type": "TaxiService",
+    "@id": `${SITE_URL}/#organization`,
+    name: "Erzurum Taksici - Saraybosna Taksi",
+    alternateName: ["Erzurum Taksi", "Erzurum Taksici", "Saraybosna Taksi"],
+    description: "Erzurum'da 7/24 taksi hizmeti. Havalimanı transferi, şehir içi ve şehirler arası taksi. Güvenilir, konforlu ve ekonomik ulaşım.",
     url: SITE_URL,
     image: [
       `${SITE_URL}/images/logo.png`,
       `${SITE_URL}/images/car-hero.png`
     ],
     logo: `${SITE_URL}/images/logo.png`,
-  telephone: "+90 535 365 65 67",
+    telephone: "+90 535 365 65 67",
+    priceRange: "₺₺",
+    currenciesAccepted: "TRY",
+    paymentAccepted: "Nakit, Havale",
     address: {
       "@type": "PostalAddress",
+      streetAddress: "Erzurum Merkez",
       addressLocality: "Erzurum",
+      addressRegion: "Erzurum",
+      postalCode: "25000",
       addressCountry: "TR",
     },
-    areaServed: ["Erzurum", "Yakutiye", "Palandöken", "Aziziye"],
+    geo: {
+      "@type": "GeoCoordinates",
+      latitude: 39.9055,
+      longitude: 41.2658
+    },
+    areaServed: [
+      { "@type": "City", name: "Erzurum" },
+      { "@type": "AdministrativeArea", name: "Yakutiye" },
+      { "@type": "AdministrativeArea", name: "Palandöken" },
+      { "@type": "AdministrativeArea", name: "Aziziye" },
+      { "@type": "AdministrativeArea", name: "Oltu" },
+      { "@type": "AdministrativeArea", name: "Horasan" },
+      { "@type": "AdministrativeArea", name: "Tortum" },
+    ],
+    serviceType: ["Taksi", "Havalimanı Transfer", "Şehir İçi Ulaşım", "Şehirler Arası Transfer", "VIP Transfer"],
     contactPoint: [
       {
         "@type": "ContactPoint",
         telephone: "+90 535 365 65 67",
         contactType: "customer service",
         areaServed: "TR",
-        availableLanguage: ["tr-TR"]
+        availableLanguage: ["Turkish"],
+        hoursAvailable: {
+          "@type": "OpeningHoursSpecification",
+          dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
+          opens: "00:00",
+          closes: "23:59"
+        }
       }
     ],
     openingHoursSpecification: [
-      { "@type": "OpeningHoursSpecification", dayOfWeek: "Monday", opens: "00:00", closes: "23:59" },
-      { "@type": "OpeningHoursSpecification", dayOfWeek: "Tuesday", opens: "00:00", closes: "23:59" },
-      { "@type": "OpeningHoursSpecification", dayOfWeek: "Wednesday", opens: "00:00", closes: "23:59" },
-      { "@type": "OpeningHoursSpecification", dayOfWeek: "Thursday", opens: "00:00", closes: "23:59" },
-      { "@type": "OpeningHoursSpecification", dayOfWeek: "Friday", opens: "00:00", closes: "23:59" },
-      { "@type": "OpeningHoursSpecification", dayOfWeek: "Saturday", opens: "00:00", closes: "23:59" },
-      { "@type": "OpeningHoursSpecification", dayOfWeek: "Sunday", opens: "00:00", closes: "23:59" },
+      { "@type": "OpeningHoursSpecification", dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"], opens: "00:00", closes: "23:59" },
     ],
     sameAs: [
       "https://wa.me/905353656567"
     ],
     hasOfferCatalog: {
       "@type": "OfferCatalog",
-      name: "Saraybosna Taksi Hizmet Kataloğu",
+      name: "Erzurum Taksi Hizmetleri",
       url: `${SITE_URL}/hizmetler`
     },
   };

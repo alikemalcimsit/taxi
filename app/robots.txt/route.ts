@@ -1,7 +1,7 @@
 // app/robots/route.ts
 import { NextResponse } from "next/server";
 
-const FALLBACK_SITE = "https://example.com";
+const FALLBACK_SITE = "https://erzurumtaksici.com";
 
 function getBaseUrl(req: Request) {
   // 1) .env üzerinden verilmişse onu kullan
