@@ -58,7 +58,7 @@ export default function Hero() {
 
       {/* ARKA PLAN + overlay */}
       <div className="absolute inset-0 z-0 h-[700px] md:h-[850px] overflow-hidden" aria-hidden>
-        <Image src="/images/Erzurum-2.jpg" alt="Erzurum şehir manzarası - Erzurum taksi hizmeti bölgesi" fill priority sizes="100vw" className="object-cover opacity-90" />
+        <Image src="/images/erzurum-bg.jpg" alt="Erzurum şehir manzarası - Erzurum taksi hizmeti bölgesi" fill priority sizes="100vw" className="object-cover opacity-90" />
         <div className="absolute inset-0 bg-black/55" />
         <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-b from-transparent to-[#F2F3F5]" />
       </div>
